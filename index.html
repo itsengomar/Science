@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموسوعة المعمارية: العمارة الإسلامية المستدامة vs الخرسانة الحديثة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="#" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        serif: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        darkBg: '#050505',
+                        darkerBg: '#000000',
+                        gold: '#d4af37',
+                        goldLight: '#f3e5ab',
+                        mud: '#a0522d',
+                        mudLight: '#cd853f',
+                        concrete: '#7f8c8d',
+                        concreteLight: '#bdc3c7'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* إعدادات عامة وسلاسة التمرير */
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #050505;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+
+        /* تأثير الزجاج الفاخر (Glassmorphism) */
+        .glass {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        /* تأثيرات الظهور عند التمرير باستخدام Observer */
+        .reveal { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal-left { opacity: 0; transform: translateX(-80px); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal-right { opacity: 0; transform: translateX(80px); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        
+        .is-visible { opacity: 1; transform: translate(0) scale(1); }
+
+        /* تأثير 3D للبطاقات والصور */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+            perspective: 1000px;
+        }
+        .card-3d img {
+            transition: transform 0.5s ease;
+        }
+        .card-3d:hover img {
+            transform: scale(1.08);
+        }
+        .card-content {
+            transform: translateZ(60px);
+            text-shadow: 0 4px 8px rgba(0,0,0,0.8);
+        }
+
+        /* شريط التمرير */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #d4af37, #8b5a2b); border-radius: 5px; }
+
+        /* خلفيات الأقسام مع تأثير Parallax */
+        .slide-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        .slide-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.95) 100%);
+        }
+
+        /* تأثيرات النصوص والنبض */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+            70% { box-shadow: 0 0 0 25px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .btn-omar { animation: pulse-gold 2.5s infinite; }
+        
+        .text-gradient-gold {
+            background: linear-gradient(45deg, #d4af37, #fff, #d4af37);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textShine 4s linear infinite;
+        }
+        @keyframes textShine { to { background-position: 200% center; } }
+
+        /* شبكة خلفية متحركة */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: center center;
+        }
+
+        /* تنسيق الجداول */
+        .scientific-table th, .scientific-table td {
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem;
+        }
+        .scientific-table tr:hover td {
+            background: rgba(212, 175, 55, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold selection:text-black">
+
+    <!-- مشغل الموسيقى (مخفي خارج الشاشة) -->
+    <div id="youtube-player" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;pointer-events:none;"></div>
+    
+    <!-- زر التحكم بالموسيقى -->
+    <button id="music-toggle" class="fixed bottom-6 right-6 z-50 glass rounded-full w-14 h-14 flex items-center justify-center text-gold hover:text-white transition-all duration-300 hover:scale-110 group">
+        <i class="fas fa-music text-xl group-hover:animate-bounce"></i>
+    </button>
+
+    <!-- شاشة الترحيب (Start Screen) -->
+    <div id="start-overlay" class="fixed inset-0 z-[100] bg-darkBg flex flex-col items-center justify-center transition-opacity duration-1000 grid-bg">
+        <div class="relative z-10 text-center">
+            <i class="fas fa-landmark-dome text-7xl text-gold mb-6 animate-pulse"></i>
+            <h1 class="text-5xl md:text-7xl font-bold text-gradient-gold mb-8 px-4 font-serif">مشروع الطالب عمر عن </h1>
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">مقارنة بين الهندسة الاسلامية قديما و بين العمارة الحالية و عمل مقارنة بين البناء بمواد طبيعية مثل الطوب الطيني و القش .. و بين البناء الإسمنتي</p>
+            <button id="start-btn" class="glass border-2 border-gold text-gold px-10 py-5 rounded-full text-2xl font-bold hover:bg-gold hover:text-black transition-all duration-500 transform hover:scale-105 shadow-[0_0_40px_rgba(212,175,55,0.4)]">
+                ابدأ الرحلة الاستكشافية <i class="fas fa-play ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- زر OMAR AI العلوي -->
+    <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-2xl px-4 transition-all duration-300" id="ai-btn-container">
+        <button onclick="openChat()" class="btn-omar w-full glass bg-gradient-to-r from-yellow-900/40 via-yellow-700/20 to-yellow-900/40 border border-gold/50 text-gold font-bold py-4 px-8 rounded-full flex items-center justify-between hover:bg-gold hover:text-black transition-all duration-500 group backdrop-blur-xl">
+            <div class="flex items-center gap-4">
+                <i class="fas fa-brain text-3xl group-hover:rotate-12 transition-transform"></i>
+                <span class="text-lg md:text-xl tracking-wide font-sans">اسأل <span class="font-black">OMAR AI</span> عن العمارة وعلوم المواد</span>
+            </div>
+            <i class="fas fa-sparkles text-xl animate-pulse"></i>
+        </button>
+    </div>
+
+    <!-- نافذة المحادثة الذكية -->
+    <div id="chat-modal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="glass w-full max-w-5xl h-[85vh] rounded-[2rem] border border-gold/40 flex flex-col overflow-hidden relative transform scale-95 transition-transform duration-300 shadow-[0_0_50px_rgba(212,175,55,0.15)]" id="chat-container">
+            <div class="p-6 border-b border-gold/20 flex justify-between items-center bg-gradient-to-r from-black/80 to-yellow-900/20">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center border border-gold/50 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gold/20 animate-ping"></div>
+                        <i class="fas fa-robot text-gold text-2xl relative z-10"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">OMAR AI Explorer</h3>
+                        <p class="text-sm text-gold/70">متصل بنموذج Llama 3.1 عبر Groq</p>
+                    </div>
+                </div>
+                <button onclick="closeChat()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 scroll-smooth bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
+                <!-- رسالة ترحيبية -->
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 rounded-full bg-gold/20 flex-shrink-0 flex items-center justify-center border border-gold/50 shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+                        <i class="fas fa-robot text-gold"></i>
+                    </div>
+                    <div class="glass-panel rounded-2xl rounded-tr-none p-5 max-w-[85%] border-t-4 border-t-gold">
+                        <p class="text-gray-100 leading-relaxed text-lg">أهلاً بك في منصة التحليل المعماري! 🏛️<br><br>أنا OMAR AI، مهندس افتراضي خبير في علوم المواد، الاستدامة، وتاريخ العمارة. يمكنك سؤالي عن:<br>
+                        • مقارنات علمية بين الطين والخرسانة.<br>
+                        • تقنيات التهوية الطبيعية (الملاقف، الأفنية).<br>
+                        • البصمة الكربونية لمواد البناء.<br>
+                        كيف يمكنني إثراء معرفتك اليوم؟</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 border-t border-gold/20 bg-black/80 backdrop-blur-xl">
+                <div class="flex gap-4 items-center">
+                    <input type="text" id="chat-input" placeholder="اكتب استفسارك الهندسي أو التاريخي هنا..." class="flex-1 bg-white/5 border border-gold/30 rounded-2xl px-6 py-5 text-white placeholder-gray-500 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all text-lg" onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()" id="send-btn" class="bg-gold text-black w-16 h-16 rounded-2xl font-bold hover:bg-yellow-400 hover:scale-105 transition-all flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                        <i class="fas fa-paper-plane text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- محتوى الموقع (15 قسم) -->
+    <main>
+
+        <!-- السلايد 1: البداية (Hero) -->
+        <section class="min-h-screen flex items-center justify-center slide-bg relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1590273089302-ebbc53986b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="absolute inset-0 grid-bg opacity-30"></div>
+            <div class="relative z-10 text-center px-4 max-w-6xl mt-20 reveal-scale is-visible">
+                <div class="inline-block px-6 py-2 rounded-full border border-gold/50 text-gold mb-6 backdrop-blur-md bg-black/30">
+                    <i class="fas fa-book-open mr-2"></i> دراسة مقارنة شاملة
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight text-white font-serif drop-shadow-2xl">
+                    حكمة <span class="text-mud text-transparent bg-clip-text bg-gradient-to-b from-mudLight to-mud">الأرض</span> <br> في مواجهة عصر <span class="text-concrete text-transparent bg-clip-text bg-gradient-to-b from-white to-concrete">الأسمنت</span>
+                </h1>
+                <p class="text-xl md:text-3xl text-gray-300 mb-16 font-light max-w-4xl mx-auto leading-relaxed">15 محطة تفصيلية تغوص في أعماق العمارة الإسلامية المستدامة وتقارنها علمياً وبيئياً مع الأساليب الإسمنتية الحديثة.</p>
+                <a href="#slide2" class="animate-bounce inline-block text-gold text-4xl opacity-80 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- السلايد 2: المواد الخام والمنشأ -->
+        <section id="slide2" class="min-h-screen py-24 bg-darkerBg relative border-b border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">01 // المنشأ</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">المواد الخام: بين الطبيعة والصناعة</h3>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">تبدأ القصة من المادة. العمارة التقليدية تأخذ من محيطها لتعيد بناءه، بينما العمارة الحديثة تعتمد على استخراج وتصنيع كيميائي معقد.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="glass p-8 rounded-3xl reveal-right">
+                        <h4 class="text-3xl font-bold text-mud mb-6 border-b border-mud/30 pb-4"><i class="fas fa-leaf mr-2"></i> الطوب اللبن والقش</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1521633547734-2a854c53e8cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="rounded-xl h-32 w-full object-cover card-3d" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1711878729907-d15019d98f09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="rounded-xl h-32 w-full object-cover card-3d" loading="lazy">
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">يُصنع من خلط الطين المحلي، الرمل، الماء، والقش (كمادة تسليح طبيعية تمنع التشقق). يُجفف تحت أشعة الشمس دون الحاجة لأفران حرق، مما يجعله مادة ذات صفر انبعاثات كربونية تقريباً.</p>
+                    </div>
+
+                    <div class="glass p-8 rounded-3xl reveal-left">
+                        <h4 class="text-3xl font-bold text-concreteLight mb-6 border-b border-concrete/30 pb-4"><i class="fas fa-industry mr-2"></i> الأسمنت والركام</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1582540730843-f4418d96ccbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="rounded-xl h-32 w-full object-cover card-3d grayscale hover:grayscale-0" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1565862452829-e33c0b781ea3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="rounded-xl h-32 w-full object-cover card-3d grayscale hover:grayscale-0" loading="lazy">
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">يتطلب الأسمنت البورتلاندي حرق الحجر الجيري والطين في أفران تصل حرارتها إلى 1450 درجة مئوية، مما يستهلك طاقة هائلة. يخلط لاحقاً مع الرمل والزلط (الركام) والماء لتشكيل الخرسانة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 3: تقنيات البناء وسرعة الإنجاز -->
+        <section class="min-h-screen py-24 slide-bg" style="background-image: url('https://images.unsplash.com/photo-1673865641469-34498379d8af?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">02 // التنفيذ</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">بين دقة اليد الآدمية وضخامة الآلة</h3>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8 items-center">
+                    <div class="lg:w-1/2 space-y-8 reveal-right">
+                        <div class="glass-panel p-6 rounded-2xl flex gap-6 items-start">
+                            <div class="text-mud text-4xl"><i class="fas fa-hands"></i></div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-2">البناء التراكمي (القديم)</h4>
+                                <p class="text-gray-400">يعتمد على العمالة اليدوية الماهرة (البنّاء). تُبنى الجدران الحاملة سماكة (تصل لـ 80 سم) تدريجياً. العملية بطيئة وتتطلب وقتاً لجفاف المونة الطينية بين المداميك، لكنها تخلق فرص عمل محلية.</p>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl flex gap-6 items-start">
+                            <div class="text-concreteLight text-4xl"><i class="fas fa-crane"></i></div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-2">الهياكل المصبوبة (الحديث)</h4>
+                                <p class="text-gray-400">استخدام الشدات الخشبية أو المعدنية لصب الأعمدة والأسقف. الاعتماد الكثيف على الرافعات والخلاطات. تمتاز بالسرعة الفائقة والقدرة على إنتاج وحدات مسبقة الصنع (Pre-cast) وبناء ناطحات السحاب.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4 reveal-left">
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1617720356637-6264c1c0b4bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-2xl w-full h-48 object-cover card-3d">
+                            <img src="https://images.unsplash.com/photo-1565419672978-6ba05e8859d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-2xl w-full h-64 object-cover card-3d">
+                        </div>
+                        <div class="space-y-4 mt-8">
+                            <img src="https://images.unsplash.com/photo-1582540730843-f4418d96ccbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-2xl w-full h-64 object-cover card-3d grayscale">
+                            <img src="https://images.unsplash.com/photo-1677253200111-97d0d490d60e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-2xl w-full h-48 object-cover card-3d grayscale">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 4: الديناميكا الحرارية (الكتلة الحرارية) -->
+        <section class="min-h-screen py-24 bg-[#0a0a0a] relative">
+            <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 50px 50px;"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">03 // الفيزياء المعمارية</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">الكتلة الحرارية: ثلاجات وأفران طبيعية</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- النهار -->
+                    <div class="glass p-8 rounded-3xl border-t-4 border-yellow-500 reveal-scale text-center">
+                        <i class="fas fa-sun text-6xl text-yellow-500 mb-6 animate-pulse"></i>
+                        <h4 class="text-2xl font-bold text-white mb-4">في نهار الصيف الحار</h4>
+                        <div class="bg-black/50 p-4 rounded-xl mb-4 text-right">
+                            <p class="text-mud font-bold"><i class="fas fa-shield-alt"></i> الطين:</p>
+                            <p class="text-sm text-gray-400">جدران سميكة تمتص حرارة الشمس ببطء شديد (تأخير حراري Time Lag). يبقى الداخل بارداً.</p>
+                        </div>
+                        <div class="bg-black/50 p-4 rounded-xl text-right">
+                            <p class="text-concreteLight font-bold"><i class="fas fa-fire"></i> الخرسانة:</p>
+                            <p class="text-sm text-gray-400">توصيل حراري سريع. تسخن الجدران وتنتقل الحرارة للداخل، مما يوجب استخدام المكيفات الآلية.</p>
+                        </div>
+                    </div>
+
+                    <!-- الرسم التوضيحي -->
+                    <div class="glass p-8 rounded-3xl flex items-center justify-center reveal-scale delay-100">
+                        <div class="w-full relative pt-[100%] rounded-full border-4 border-dashed border-gold/30 animate-[spin_60s_linear_infinite]">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-temperature-half text-5xl text-gold"></i>
+                            </div>
+                        </div>
+                        <p class="absolute text-center text-sm text-gray-300 font-bold px-4">تأثير السعة الحرارية النوعية (Specific Heat Capacity)</p>
+                    </div>
+
+                    <!-- الليل -->
+                    <div class="glass p-8 rounded-3xl border-t-4 border-blue-500 reveal-scale delay-200 text-center">
+                        <i class="fas fa-moon text-6xl text-blue-500 mb-6 animate-pulse"></i>
+                        <h4 class="text-2xl font-bold text-white mb-4">في ليل الشتاء البارد</h4>
+                        <div class="bg-black/50 p-4 rounded-xl mb-4 text-right">
+                            <p class="text-mud font-bold"><i class="fas fa-fire-burner"></i> الطين:</p>
+                            <p class="text-sm text-gray-400">يُشع الطين الحرارة التي امتصها نهاراً إلى الداخل، ليعمل كمدفأة طبيعية طوال الليل.</p>
+                        </div>
+                        <div class="bg-black/50 p-4 rounded-xl text-right">
+                            <p class="text-concreteLight font-bold"><i class="fas fa-snowflake"></i> الخرسانة:</p>
+                            <p class="text-sm text-gray-400">تفقد حرارتها بسرعة وتصبح الجدران جليدية، وتتطلب أنظمة تدفئة صناعية مستهلكة للطاقة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 5: أنظمة التهوية -->
+        <section class="min-h-screen py-24 slide-bg" style="background-image: url('https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">04 // التهوية وتجديد الهواء</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">الملاقف الأندلسية vs أنظمة HVAC</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="card-3d glass rounded-3xl overflow-hidden reveal-right group">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1649244218575-b71574160675?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h4 class="absolute bottom-6 left-6 text-3xl font-bold text-white">التهوية السلبية (Passive)</h4>
+                        </div>
+                        <div class="p-8">
+                            <ul class="space-y-4 text-gray-300">
+                                <li><strong class="text-gold">الملاقف (أبراج الرياح):</strong> تلتقط الهواء البارد من الطبقات العليا وتوجهه للأسفل عبر قنوات مبللة لتبريده.</li>
+                                <li><strong class="text-gold">الفناء الداخلي (الحوش):</strong> يعمل كمنظم حراري، يسحب الهواء الساخن للأعلى (تأثير المدخنة) ليحل محله هواء نقي.</li>
+                                <li><strong class="text-gold">السَلْسَبيل:</strong> لوح رخامي متموج يتدفق عليه الماء لزيادة رطوبة الهواء المار وتبريده.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-3d glass rounded-3xl overflow-hidden reveal-left group">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1758545814875-c2f0a0c89943?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 grayscale">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h4 class="absolute bottom-6 left-6 text-3xl font-bold text-white">التهوية الميكانيكية (Active)</h4>
+                        </div>
+                        <div class="p-8">
+                            <ul class="space-y-4 text-gray-300">
+                                <li><strong class="text-concreteLight">التكييف المركزي (HVAC):</strong> يعتمد على ضواغط ومبردات (Freon) تستهلك كميات هائلة من الكهرباء.</li>
+                                <li><strong class="text-concreteLight">متلازمة المباني المغلقة:</strong> تدوير نفس الهواء اصطناعياً يؤدي لمشاكل تنفسية إذا لم تُنظف الفلاتر بانتظام.</li>
+                                <li><strong class="text-concreteLight">العزل المحكم:</strong> المباني الحديثة معزولة تماماً (Air-tight) مما يلغي التنفس الطبيعي لجدران المبنى.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 6: الإضاءة الطبيعية والظلال -->
+        <section class="min-h-screen py-24 bg-[#050505] relative border-b border-white/5">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">05 // الإضاءة والظلال</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">المشربية ضد الواجهات الزجاجية</h3>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-stretch">
+                    <div class="md:w-1/2 glass p-8 rounded-3xl flex flex-col justify-center reveal-right relative overflow-hidden">
+                        <i class="fas fa-sun absolute -top-10 -right-10 text-9xl text-gold/10"></i>
+                        <h4 class="text-3xl font-bold text-gold mb-4 relative z-10">المشربية (الروشان)</h4>
+                        <p class="text-gray-300 mb-6 text-lg relative z-10">إعجاز خشبي مخروط. تعمل المشربية على تكسير أشعة الشمس القاسية وتحويلها لضوء مشتت ناعم ينير المكان دون حرارة. كما توفر الخصوصية المطلقة لأهل البيت وتسمح بمرور النسيم الخفيف.</p>
+                        <img src="https://images.unsplash.com/photo-1603522456939-a52d4adda873?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-xl h-48 object-cover card-3d">
+                    </div>
+                    
+                    <div class="md:w-1/2 glass p-8 rounded-3xl flex flex-col justify-center reveal-left relative overflow-hidden">
+                        <i class="fas fa-bolt absolute -top-10 -left-10 text-9xl text-concrete/10"></i>
+                        <h4 class="text-3xl font-bold text-concreteLight mb-4 relative z-10">الواجهات الزجاجية (Curtain Walls)</h4>
+                        <p class="text-gray-300 mb-6 text-lg relative z-10">رغم توفيرها لإطلالات بانورامية وإضاءة كثيفة، إلا أنها تخلق "تأثير الصوبة الزجاجية" (Greenhouse effect) حابسة الحرارة بالداخل، وتتطلب زجاجاً مزدوجاً مكلفاً وأنظمة تظليل خارجية.</p>
+                        <img src="https://images.unsplash.com/photo-1715156153744-d5fd2f1f66eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-xl h-48 object-cover card-3d grayscale">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 7: الميكانيكا الإنشائية (علم المواد) -->
+        <section class="min-h-screen py-24 slide-bg" style="background-image: url('https://images.unsplash.com/photo-1627790497727-41fb43f961be?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">06 // الهندسة الإنشائية</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">قوى الضغط والشد (Compression vs Tension)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="glass p-8 rounded-3xl text-center reveal-scale">
+                        <div class="h-32 flex items-center justify-center mb-6">
+                            <i class="fas fa-archway text-7xl text-mud"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4">القباب والعقود (نقل الأحمال بالضغط)</h4>
+                        <p class="text-gray-400 mb-6">الطوب والطين ضعيفان جداً في مقاومة "الشد" (Tension)، لذا ابتكر المعماريون القدامى الأقواس والقباب. هذا التصميم الهندسي العبقري يحول جميع الأحمال إلى قوى "ضغط" (Compression) تنتقل بأمان إلى القواعد.</p>
+                        <div class="w-full bg-white/10 rounded-full h-2 mb-2">
+                            <div class="bg-mud h-2 rounded-full" style="width: 30%"></div>
+                        </div>
+                        <p class="text-xs text-left text-gray-500">قوة الشد (الضعيفة)</p>
+                    </div>
+
+                    <div class="glass p-8 rounded-3xl text-center reveal-scale delay-100">
+                        <div class="h-32 flex items-center justify-center mb-6">
+                            <i class="fas fa-building text-7xl text-concreteLight"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4">الخرسانة المسلحة (دمج المواد)</h4>
+                        <p class="text-gray-400 mb-6">الخرسانة ممتازة في الضغط، لكنها تنهار تحت الشد. لذلك تم إضافة "أسياخ الحديد" (Steel Rebar) بداخلها لتحمل قوى الشد. هذا الدمج هو ما سمح ببناء الأسقف المستوية الواسعة (Slabs) والجسور الكابولية.</p>
+                        <div class="w-full bg-white/10 rounded-full h-2 mb-2">
+                            <div class="bg-concreteLight h-2 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <p class="text-xs text-left text-gray-500">قوة الشد (العالية بفضل الحديد)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 8: الصوتيات (Acoustics) -->
+        <section class="min-h-screen py-24 bg-[#0a0a0a] relative">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">07 // الصوتيات المعمارية</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">السكينة ضد الضوضاء</h3>
+                </div>
+
+                <div class="glass p-10 rounded-3xl reveal-scale">
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="md:w-1/3 text-center">
+                            <i class="fas fa-volume-mute text-6xl text-gold mb-4"></i>
+                            <h4 class="text-xl font-bold text-white mb-2">امتصاص الصوت</h4>
+                            <p class="text-gray-400">الطين، الخشب، والأسطح غير المنتظمة (الزخارف) تعمل كمشتت وممتص طبيعي للموجات الصوتية (Sound Absorption). هذا يمنع الصدى ويخلق بيئة هادئة جداً داخل المساجد والبيوت القديمة.</p>
+                        </div>
+                        
+                        <!-- رسم بياني لتردد الصوت -->
+                        <div class="md:w-1/3 flex justify-center py-8">
+                            <svg viewBox="0 0 100 50" class="w-full max-w-[200px] stroke-gold fill-none stroke-2 animate-pulse">
+                                <path d="M0,25 Q12.5,0 25,25 T50,25 T75,25 T100,25" class="transition-all duration-1000"/>
+                            </svg>
+                        </div>
+
+                        <div class="md:w-1/3 text-center">
+                            <i class="fas fa-volume-up text-6xl text-concreteLight mb-4"></i>
+                            <h4 class="text-xl font-bold text-white mb-2">انعكاس الصوت (Reverberation)</h4>
+                            <p class="text-gray-400">الأسطح الخرسانية والزجاجية الملساء الصلبة تعكس 98% من الموجات الصوتية. مما يسبب صدى مزعجاً وضوضاء متراكمة تتطلب تركيب مواد عزل صوتي اصطناعية إضافية (Acoustic Panels).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 9: البصمة الكربونية والأثر البيئي -->
+        <section class="min-h-screen py-24 slide-bg" style="background-image: url('https://images.unsplash.com/photo-1585252155261-cff31944d781?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">08 // الأثر البيئي</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">البصمة الكربونية (CO2 Footprint)</h3>
+                    <p class="text-lg text-gray-300">حقائق رقمية صادمة عن تأثير مواد البناء على الغلاف الجوي.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto reveal-scale">
+                    <!-- كربون الطين -->
+                    <div class="glass p-8 rounded-2xl flex items-center justify-between border-l-8 border-green-500">
+                        <div>
+                            <h4 class="text-2xl font-bold text-white mb-2">الطوب اللبن غير المحروق</h4>
+                            <p class="text-gray-400">انبعاثات تصنيع 1 طن</p>
+                        </div>
+                        <div class="text-4xl font-black text-green-500">~0.01<span class="text-lg"> طن CO2</span></div>
+                    </div>
+
+                    <!-- كربون الأسمنت -->
+                    <div class="glass p-8 rounded-2xl flex items-center justify-between border-l-8 border-red-600">
+                        <div>
+                            <h4 class="text-2xl font-bold text-white mb-2">الأسمنت البورتلاندي</h4>
+                            <p class="text-gray-400">انبعاثات تصنيع 1 طن</p>
+                        </div>
+                        <div class="text-4xl font-black text-red-500">0.9<span class="text-lg"> طن CO2</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-12 glass p-8 rounded-3xl max-w-5xl mx-auto text-center reveal-scale delay-100">
+                    <i class="fas fa-globe-africa text-6xl text-blue-400 mb-4"></i>
+                    <p class="text-xl text-gray-200 leading-relaxed">
+                        صناعة الأسمنت وحدها مسؤولة عن حوالي <strong>8% من إجمالي انبعاثات ثاني أكسيد الكربون العالمية</strong>. إذا كانت صناعة الأسمنت دولة، فستكون ثالث أكبر ملوث في العالم بعد الصين والولايات المتحدة. في المقابل، المباني الطينية تعود إلى الأرض عند هدمها دون أي تلوث (Cradle-to-Cradle).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 10: الجماليات والزخرفة (Aesthetics) -->
+        <section class="min-h-screen py-24 bg-[#050505] relative border-b border-white/5">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">09 // الجماليات</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">المقرنصات والتوريق ضد التكعيبية الحادة</h3>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card-3d overflow-hidden rounded-2xl h-64 reveal-scale" style="transition-delay: 0s;">
+                        <img src="https://images.unsplash.com/photo-1630483089827-addd389855ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="card-3d overflow-hidden rounded-2xl h-64 reveal-scale" style="transition-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1573765727997-e02883182ba7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="card-3d overflow-hidden rounded-2xl h-64 reveal-scale" style="transition-delay: 0.2s;">
+                        <img src="https://images.unsplash.com/photo-1531165424588-80b93de6f807?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover grayscale hover:grayscale-0">
+                    </div>
+                    <div class="card-3d overflow-hidden rounded-2xl h-64 reveal-scale" style="transition-delay: 0.3s;">
+                        <img src="https://images.unsplash.com/photo-1651483439342-cb8b4f91222d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover grayscale hover:grayscale-0">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    <div class="glass p-6 rounded-2xl text-center reveal-right">
+                        <h4 class="text-xl font-bold text-gold mb-2">العمارة الإسلامية</h4>
+                        <p class="text-gray-400">تعتمد على الهندسة الكسيرية (Fractals)، النجمة الثمانية، والمقرنصات التي تكسر حدة الزوايا. التكرار اللانهائي يعكس النظرة الفلسفية للكون.</p>
+                    </div>
+                    <div class="glass p-6 rounded-2xl text-center reveal-left">
+                        <h4 class="text-xl font-bold text-concreteLight mb-2">العمارة الحديثة والدولية</h4>
+                        <p class="text-gray-400">"الشكل يتبع الوظيفة". تجريد كامل، خطوط مستقيمة حادة، صناديق زجاجية وخرسانية تعكس سرعة العصر الرأسمالي والصناعي.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 11: جدول المقارنة العام -->
+        <section class="min-h-screen flex items-center justify-center bg-darkBg relative reveal py-24 border-b border-white/5">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">10 // التقييم الشامل</h2>
+                    <h3 class="text-4xl font-bold text-white">جدول المقارنة العام</h3>
+                </div>
+                
+                <div class="glass rounded-3xl overflow-hidden overflow-x-auto border border-white/10">
+                    <table class="w-full text-right border-collapse text-sm md:text-base">
+                        <thead>
+                            <tr class="bg-black/40 text-gold border-b border-white/10">
+                                <th class="p-5 font-bold">العنصر</th>
+                                <th class="p-5 border-r border-white/5 text-mud">نظام البناء الطيني التقليدي</th>
+                                <th class="p-5 border-r border-white/5 text-concreteLight">نظام الخرسانة المسلحة</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-white/5">
+                                <td class="p-5 font-bold bg-white/5">التكلفة الأولية</td>
+                                <td class="p-5 border-r border-white/5">منخفضة جداً (مواد متوفرة محلياً)</td>
+                                <td class="p-5 border-r border-white/5">مرتفعة (حديد، أسمنت، قوالب)</td>
+                            </tr>
+                            <tr class="border-b border-white/5 bg-black/20">
+                                <td class="p-5 font-bold bg-white/5">تكلفة التشغيل (طاقة)</td>
+                                <td class="p-5 border-r border-white/5 text-green-400">شبه معدومة (تهوية وإضاءة طبيعية)</td>
+                                <td class="p-5 border-r border-white/5 text-red-400">عالية جداً (تكييف آلي وإضاءة)</td>
+                            </tr>
+                            <tr class="border-b border-white/5">
+                                <td class="p-5 font-bold bg-white/5">العمالة المطلوبة</td>
+                                <td class="p-5 border-r border-white/5">حرفيون محليون، بناء مجتمعي</td>
+                                <td class="p-5 border-r border-white/5">مهندسون، آليات ثقيلة، مقاولات</td>
+                            </tr>
+                            <tr class="border-b border-white/5 bg-black/20">
+                                <td class="p-5 font-bold bg-white/5">إمكانية إعادة التدوير</td>
+                                <td class="p-5 border-r border-white/5 text-green-400">100% (يعاد خلطه بالماء أو للزراعة)</td>
+                                <td class="p-5 border-r border-white/5 text-red-400">صعبة (يتحول لركام هدم يصعب تدويره)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-5 font-bold bg-white/5">التمدد العمراني</td>
+                                <td class="p-5 border-r border-white/5">تمدد أفقي (أفنية وبيوت متلاصقة)</td>
+                                <td class="p-5 border-r border-white/5">تمدد رأسي (أبراج وناطحات سحاب)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 12: الجدول العلمي للخصائص الفيزيائية -->
+        <section class="min-h-screen flex items-center justify-center slide-bg relative reveal py-24" style="background-image: url('https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">11 // فيزياء المواد</h2>
+                    <h3 class="text-4xl font-bold text-white">الخصائص الحرارية والميكانيكية (بيانات علمية)</h3>
+                </div>
+                
+                <div class="glass rounded-3xl overflow-hidden overflow-x-auto">
+                    <table class="w-full text-center border-collapse text-sm md:text-base scientific-table">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-yellow-900/50 to-black/50 text-white border-b border-gold/30">
+                                <th class="p-4 text-right">الخاصية الفيزيائية</th>
+                                <th class="p-4">وحدة القياس</th>
+                                <th class="p-4 text-mud">الطوب اللبن (Adobe)</th>
+                                <th class="p-4 text-concreteLight">الخرسانة المسلحة</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr>
+                                <td class="p-4 text-right font-bold">الموصلية الحرارية (k-value)</td>
+                                <td class="p-4 font-mono text-gray-500">W/(m·K)</td>
+                                <td class="p-4 text-green-400">0.25 - 0.30 <br><span class="text-xs text-gray-500">(عزل ممتاز)</span></td>
+                                <td class="p-4 text-red-400">1.4 - 1.7 <br><span class="text-xs text-gray-500">(توصيل سريع)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold">الكثافة (Density)</td>
+                                <td class="p-4 font-mono text-gray-500">kg/m³</td>
+                                <td class="p-4">1200 - 1700</td>
+                                <td class="p-4 font-bold text-white">2400 - 2500</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold">قوة الضغط (Compressive Strength)</td>
+                                <td class="p-4 font-mono text-gray-500">MPa</td>
+                                <td class="p-4">1.5 - 3.0 <br><span class="text-xs text-gray-500">(كافية للبيوت المنخفضة)</span></td>
+                                <td class="p-4 text-green-400 font-bold">20.0 - 50.0+ <br><span class="text-xs text-gray-500">(للأبراج الضخمة)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-right font-bold">السعة الحرارية النوعية</td>
+                                <td class="p-4 font-mono text-gray-500">J/(kg·K)</td>
+                                <td class="p-4 text-green-400 font-bold">~1000</td>
+                                <td class="p-4">~840</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 13: الزلازل والكوارث (Durability) -->
+        <section class="min-h-screen py-24 bg-[#0a0a0a] relative">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">12 // المتانة والصمود</h2>
+                    <h3 class="text-4xl font-bold text-white mb-6">مقاومة الزلازل واختبار الزمن</h3>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="md:w-1/2 glass p-8 rounded-3xl reveal-right">
+                        <i class="fas fa-house-damage text-5xl text-mud mb-4"></i>
+                        <h4 class="text-2xl font-bold text-white mb-4">مرونة الهياكل التقليدية</h4>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            تبدو المباني الطينية هشة، لكن عند دمجها مع إطارات خشبية (تقنية الـ Timber-framing أو شبكات القصب)، تكتسب مرونة هائلة (Ductility). خلال الزلازل، تهتز هذه المباني وتتشوه المفاصل لامتصاص الطاقة الزلزالية دون انهيار مفاجئ تام، مما يمنح السكان وقتاً للهروب.
+                        </p>
+                        <p class="text-sm text-gold">مثال: مباني شبام حضرموت (ناطحات السحاب الطينية) الصامدة لمئات السنين.</p>
+                    </div>
+
+                    <div class="md:w-1/2 glass p-8 rounded-3xl reveal-left">
+                        <i class="fas fa-building-shield text-5xl text-concreteLight mb-4"></i>
+                        <h4 class="text-2xl font-bold text-white mb-4">الصلابة الجسيمة للخرسانة</h4>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            الخرسانة المسلحة الحديثة تصمم لمقاومة الزلازل العالية عبر "القص" (Shear walls). هي أصلب بكثير ولا تنهار بسهولة. لكن العيب أن الخرسانة مادة قصفة (Brittle)؛ إذا تجاوز الزلزال قدرتها التصميمية، قد يحدث "انهيار قصي مفاجئ" (Sudden Failure) مميت. كما أن صدأ تسليح الحديد يقلل من عمر المبنى إلى 70-100 عام فقط.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 14: الجانب النفسي والروحي (Psychology) -->
+        <section class="min-h-screen py-24 slide-bg" style="background-image: url('https://images.unsplash.com/photo-1606994868513-d480e1a1cab0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <div class="mb-16 reveal-scale">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">13 // السيكولوجيا المعمارية</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">تأثير الفراغ على الروح والنفس</h3>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">المباني ليست مجرد جدران، بل هي قوالب تشكل سلوكنا ومزاجنا.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="glass-panel p-8 rounded-2xl reveal-left">
+                        <h4 class="text-2xl font-bold text-mud mb-4">احتواء الطين والفناء</h4>
+                        <p class="text-gray-300 mb-4">الفناء الداخلي المفتوح للسماء (Courtyard) يوجه بصر الإنسان للأعلى (للسماء والتأمل)، ويجمع الأسرة في مركز دافئ. المواد الطبيعية المائلة للتراب تقلل من التوتر وتبطئ نبضات القلب لارتباطها البيولوجي (Biophilia) بالطبيعة.</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl reveal-right">
+                        <h4 class="text-2xl font-bold text-concreteLight mb-4">اغتراب الصناديق الخرسانية</h4>
+                        <p class="text-gray-300 mb-4">الشقق الحديثة توجه النظر للخارج نحو الشارع (الضوضاء). الممرات الضيقة والسقوف المنخفضة، والألوان الرمادية القاسية للخرسانة المكشوفة (Brutalism) ارتبطت بدراسات نفسية بزيادة معدلات الاكتئاب والعزلة الاجتماعية.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 15: المستقبل (الخلاصة والدمج) -->
+        <section class="min-h-screen py-24 bg-darkBg relative border-b border-gold/20 flex flex-col justify-center">
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <div class="mb-12 reveal-scale">
+                    <h2 class="text-sm font-bold tracking-widest text-gold mb-2 uppercase">14 // المستقبل</h2>
+                    <h3 class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 mb-6">عمارة الغد: زواج الماضي والحاضر</h3>
+                </div>
+
+                <div class="glass p-12 rounded-[3rem] max-w-4xl mx-auto border-gold/30 relative overflow-hidden reveal-scale">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent"></div>
+                    <i class="fas fa-leaf text-5xl text-green-500 mb-6 relative z-10"></i>
+                    <p class="text-2xl text-gray-200 leading-loose relative z-10 font-serif">
+                        الحل ليس بالعودة للعيش في خيام أو كهوف، ولا بالاستمرار في صب كتل أسمنتية تخنق الكوكب. المستقبل يكمن في <strong class="text-gold">"العمارة الهجينة المتوافقة مناخياً"</strong>: استخدام الخرسانة في الهياكل والقواعد فقط، واستخدام الطوب المضغوط (CEB) والمواد الطبيعية في الجدران، مع استعارة أنظمة التهوية السلبية القديمة وتطبيقها برمجياً (Parametric Design) لإنشاء مبانٍ ذكية، صحية، ومستدامة.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- السلايد 16: النهاية (CTA - اسأل الذكاء الاصطناعي) -->
+        <section class="min-h-[70vh] flex flex-col items-center justify-center bg-black relative py-20 overflow-hidden">
+            <div class="absolute inset-0 grid-bg opacity-20"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[120px] pointer-events-none"></div>
+            
+            <h2 class="text-sm font-bold tracking-widest text-gold mb-4 uppercase reveal-scale">15 // التفاعل والمناقشة</h2>
+            <h3 class="text-5xl md:text-7xl font-bold text-white mb-8 text-center reveal-scale">
+                هل لديك استفسار هندسي؟
+            </h3>
+            <p class="text-xl text-gray-400 mb-12 text-center max-w-2xl reveal-scale">
+                تحدث الآن مع مهندس الذكاء الاصطناعي <span class="text-gold font-bold">OMAR AI</span> واسأله عن تفاصيل الخرسانة، الطين، التكلفة، أو حتى النظريات المعمارية.
+            </p>
+            
+            <button onclick="openChat()" class="reveal-scale btn-omar glass bg-gold text-black px-12 py-6 rounded-full text-2xl font-black hover:bg-yellow-400 transition-all duration-300 transform hover:scale-110 flex items-center gap-4 shadow-[0_0_50px_rgba(212,175,55,0.4)]">
+                <i class="fas fa-comment-dots text-4xl"></i>
+                ابدأ النقاش المعماري الآن
+            </button>
+            
+            <footer class="mt-24 text-gray-600 text-sm font-mono text-center">
+                Built with <i class="fas fa-heart text-red-900 mx-1"></i> by OMAR AI | Llama 3.1 عبر Groq Powered
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // --- 1. إعدادات YouTube والموسيقى الخلفية ---
+        let player;
+        let isPlaying = false;
+        const videoId = '3S7EySjrmNk'; 
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'mute': 1,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': videoId,
+                },
+                events: {
+                    'onReady': function(event) {
+                        event.target.mute();
+                        event.target.playVideo();
+                        isPlaying = true;
+                        updateMusicIcon();
+                    }
+                }
+            });
+        }
+
+        const startBtn = document.getElementById('start-btn');
+        const overlay = document.getElementById('start-overlay');
+        const musicToggle = document.getElementById('music-toggle');
+        const aiBtnContainer = document.getElementById('ai-btn-container');
+
+        startBtn.addEventListener('click', () => {
+            if(player && player.playVideo) {
+                player.unMute();
+                player.setVolume(50);
+                player.playVideo();
+                isPlaying = true;
+                updateMusicIcon();
+            }
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.style.overflowY = 'auto';
+            }, 1000);
+        });
+
+        musicToggle.addEventListener('click', () => {
+            if (!player) return;
+            if (isPlaying) {
+                player.mute();
+                isPlaying = false;
+            } else {
+                player.unMute();
+                player.setVolume(50);
+                player.playVideo();
+                isPlaying = true;
+            }
+            updateMusicIcon();
+        });
+
+        function updateMusicIcon() {
+            musicToggle.innerHTML = isPlaying 
+                ? '<i class="fas fa-volume-up text-xl animate-pulse"></i>' 
+                : '<i class="fas fa-volume-mute text-xl text-gray-500"></i>';
+        }
+
+        // --- 2. إخفاء وإظهار زر OMAR AI عند التمرير ---
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st > lastScrollTop && st > 100){
+                // لأسفل: إخفاء الزر قليلاً للأعلى
+                aiBtnContainer.style.transform = "translate(-50%, -150%)";
+            } else {
+                // لأعلى: إظهار الزر
+                aiBtnContainer.style.transform = "translate(-50%, 0)";
+            }
+            lastScrollTop = st <= 0 ? 0 : st; 
+        }, false);
+
+        // --- 3. تأثيرات التمرير المتقدمة (Intersection Observer) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // لا تقم بإلغاء المراقبة إذا كنت تريد تكرار الحركة (تركناها للمرة الأولى فقط)
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // --- 4. تأثير 3D للبطاقات المتقدم ---
+        const cards = document.querySelectorAll('.card-3d');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                let rect = card.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                let centerX = rect.width / 2;
+                let centerY = rect.height / 2;
+                let rotateX = ((y - centerY) / centerY) * -10; 
+                let rotateY = ((x - centerX) / centerX) * 10;
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // --- 5. دمج Llama 3.1 عبر Groq API (OMAR AI) ---
+        const apiKey = "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"; // <--- مفتاح Groq API
+        const chatModal = document.getElementById('chat-modal');
+        const chatContainer = document.getElementById('chat-container');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+
+        const systemPrompt = `أنت OMAR AI، مهندس معماري افتراضي وخبير في علوم المواد، الاستدامة، وتاريخ العمارة الإسلامية.
+مهمتك هي الإجابة حصرياً على أسئلة المستخدمين المتعلقة بالمقارنات الهندسية والعلمية بين مواد البناء الطبيعية (الطين، القش، الخشب) والمواد الحديثة (الأسمنت، الحديد، الزجاج).
+قدم إجابات علمية دقيقة، اذكر الأرقام والإحصائيات إذا طلب منك (مثل البصمة الكربونية، الموصلية الحرارية)، وكن لطيفاً ومنظماً في ردودك. استخدم النقاط العريضة والرموز التعبيرية المعمارية 🏛️🏗️🌿.`;
+
+        let conversationHistory = [];
+
+        function openChat() {
+            chatModal.classList.remove('hidden');
+            setTimeout(() => {
+                chatModal.classList.remove('opacity-0');
+                chatContainer.classList.remove('scale-95');
+                chatInput.focus();
+            }, 10);
+        }
+
+        function closeChat() {
+            chatModal.classList.add('opacity-0');
+            chatContainer.classList.add('scale-95');
+            setTimeout(() => chatModal.classList.add('hidden'), 300);
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function formatMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<b class="text-gold">$1</b>')
+                .replace(/\*(.*?)\*/g, '<i class="text-goldLight">$1</i>')
+                .replace(/\n/g, '<br>')
+                .replace(/-(.*?)(<br>|$)/g, '<li class="ml-4">$1</li>');
+        }
+
+        function appendMessage(sender, text) {
+            const isUser = sender === 'user';
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex gap-4 ${isUser ? 'flex-row-reverse' : ''} animate-[fade-in_0.3s_ease-out]`;
+            
+            const iconHTML = isUser 
+                ? `<div class="w-12 h-12 rounded-full bg-blue-900/40 flex-shrink-0 flex items-center justify-center border border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]"><i class="fas fa-user text-blue-400"></i></div>`
+                : `<div class="w-12 h-12 rounded-full bg-gold/20 flex-shrink-0 flex items-center justify-center border border-gold/50 shadow-[0_0_15px_rgba(212,175,55,0.3)]"><i class="fas fa-robot text-gold"></i></div>`;
+            
+            const formattedText = formatMarkdown(text);
+
+            const textHTML = `
+                <div class="${isUser ? 'bg-blue-900/20 border-blue-500/30 text-white' : 'glass-panel border-gold/30 text-gray-200'} border rounded-2xl ${isUser ? 'rounded-tl-none' : 'rounded-tr-none'} p-5 max-w-[85%] text-lg">
+                    <div class="leading-relaxed">${formattedText}</div>
+                </div>
+            `;
+            
+            msgDiv.innerHTML = iconHTML + textHTML;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function appendLoading() {
+            const msgDiv = document.createElement('div');
+            msgDiv.id = 'loading-msg';
+            msgDiv.className = `flex gap-4`;
+            msgDiv.innerHTML = `
+                <div class="w-12 h-12 rounded-full bg-gold/20 flex-shrink-0 flex items-center justify-center border border-gold/50">
+                    <i class="fas fa-cog text-gold animate-spin"></i>
+                </div>
+                <div class="glass-panel border-gold/30 rounded-2xl rounded-tr-none p-5 flex items-center gap-3">
+                    <span class="text-gray-400 text-sm">OMAR AI يحلل البيانات...</span>
+                    <div class="flex gap-1">
+                        <div class="w-2 h-2 bg-gold rounded-full animate-pulse"></div>
+                        <div class="w-2 h-2 bg-gold rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-gold rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage('user', text);
+            chatInput.value = '';
+            chatInput.disabled = true;
+            isMessageSending = true;
+            
+            conversationHistory.push({ role: "user", content: text });
+            appendLoading();
+
+            try {
+                const systemMessage = { role: "system", content: systemPrompt };
+                const messages = [systemMessage, ...conversationHistory.slice(-10)];
+
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'llama-3.1-8b-instant',
+                        messages: messages,
+                        max_tokens: 500,
+                        temperature: 0.7
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById('loading-msg')?.remove();
+
+                if (data.error) {
+                    appendMessage('ai', `⚠️ خطأ في الاتصال: ${data.error.message}`);
+                } else if (data.choices?.[0]?.message?.content) {
+                    const aiResponseText = data.choices[0].message.content;
+                    appendMessage('ai', aiResponseText);
+                    conversationHistory.push({ role: "assistant", content: aiResponseText });
+                }
+            } catch (error) {
+                document.getElementById('loading-msg')?.remove();
+                appendMessage('ai', 'عذراً، فشل الاتصال. يرجى التحقق من اتصالك بالإنترنت ومن الـ API Key.');
+            } finally {
+                isMessageSending = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+    </script>
+</body>
+</html>
